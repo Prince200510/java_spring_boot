@@ -1,0 +1,9 @@
+<h1>Users</h1>
+
+<ul>
+    <li th:each="user : ${users}">
+        <span th:text="${user.name}"></span>
+        -
+        <span th:text="${user.age}"></span>
+    </li>
+</ul>
