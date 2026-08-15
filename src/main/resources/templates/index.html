@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Users</title>
+  </head>
+  <body>
+    <h1>Users</h1>
+    <button onclick="getUsers()">Load Users</button>
+    <div id="users"></div>
+
+    <script>
+      async function getUsers() {
+        const response = await fetch("http://localhost:8080/users_db");
+        if (!response.ok) {
+          throw new Error("Failed to fetch users");
+        }
+
+        const data = await response.json();
+        const users = Array.isArray(data) ? data : [data];
+        const container = document.getElementById("users");
+        container.innerHTML = "";
+
+        users.forEach((user) => {
+          if (!user) return;
+
+          const div = document.createElement("div");
+          div.innerHTML = `
+                    <p>
+                        ID: ${user.id ?? "N/A"}
+                        <br>
+                        Name: ${user.name ?? "Unknown"}
+                        <br>
+                        Age: ${user.age ?? "N/A"}
+                    </p>
+                    <hr>
+                `;
+          container.appendChild(div);
+        });
+      }
+    </script>
+  </body>
+</html>
